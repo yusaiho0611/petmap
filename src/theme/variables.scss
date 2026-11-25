@@ -1,0 +1,137 @@
+// 主題與版面變數
+// 品牌橙色全部保留原本數值，只係重新決定「用幾多、用喺邊」。
+// For information on how to create your own theme, please refer to:
+// https://ionicframework.com/docs/theming/
+
+:root {
+  /** primary - 溫馨寵物橘色 **/
+  --ion-color-primary: #ff8c42;
+  --ion-color-primary-rgb: 255, 140, 66;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e07b3a;
+  --ion-color-primary-tint: #ff9d55;
+
+  /** secondary - 柔和奶油黃（可用於次要按紐/標籤） **/
+  --ion-color-secondary: #f4a261;
+  --ion-color-secondary-rgb: 244, 162, 97;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #d78f55;
+  --ion-color-secondary-tint: #f5ab71;
+
+  /** warning - 亮橘黃標籤 **/
+  --ion-color-warning: #ffb703;
+  --ion-color-warning-rgb: 255, 183, 3;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0a103;
+  --ion-color-warning-tint: #ffbe1c;
+
+  /* ------------------------------------------------------------------
+   * 版面基本值
+   * 顏色、圓角、字級集中在這裡，各頁只引用變數，唔再各自寫死數值。
+   * ------------------------------------------------------------------ */
+
+  /* 底色與文字：由「純白 + 純黑」改成帶少少灰調，冇咁刺眼 */
+  --pm-bg: #f4f5f7;          /* 頁面底色 */
+  --pm-surface: #ffffff;     /* 卡片／清單底 */
+  --pm-sunken: #eef0f3;      /* 內嵌區塊（小地圖外框等） */
+  --pm-line: #e6e8eb;        /* 1px 分隔線、輸入框邊框 */
+  --pm-line-strong: #d5d9de;
+  --pm-ink: #1c1f23;         /* 主要文字 */
+  --pm-ink-2: #5b6470;       /* 次要文字：地區、地址、時段 */
+  --pm-ink-3: #949aa3;       /* 提示、placeholder */
+
+  /* 圓角：由 14px 收到 10px，減少「一舊舊圓角」嘅塑膠感 */
+  --pm-radius: 10px;
+  --pm-radius-sm: 8px;
+  --pm-radius-xs: 5px;
+
+  /* 點擊區與行高 */
+  --pm-tap: 44px;
+  --pm-row: 64px;
+
+  /* 中文字體優先，唔靠外部字體檔，離線都一樣樣 */
+  --pm-font: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC",
+    "Noto Sans HK", "Microsoft JhengHei", "Helvetica Neue", Arial, sans-serif;
+
+  /* 電話、時間、座標用等寬數字，掃落去唔會跳 */
+  --pm-num-font: ui-monospace, "SF Mono", "Roboto Mono", "Consolas", monospace;
+}
+
+/* ------------------------------------------------------------------
+ * 標題欄
+ * 橙色照留，但文字靠左、字級收到 17px，右邊按鈕唔再逼到標題跳位。
+ * ------------------------------------------------------------------ */
+ion-toolbar {
+  --min-height: 52px;
+  --border-width: 0 0 1px 0;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-style: solid;
+}
+
+ion-toolbar::part(container) {
+  display: flex;
+  align-items: center;
+}
+
+/* Ionic 預設會把標題絕對定位到正中；改成 static 就跟返一般 flex 排序 */
+ion-toolbar ion-title {
+  position: static;
+  flex: 1 1 auto;
+  text-align: start;
+  padding-inline: 16px;
+  font-family: var(--pm-font);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+ion-toolbar ion-button {
+  --color: #ffffff;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  height: 40px;
+}
+
+ion-toolbar ion-back-button {
+  --color: #ffffff;
+}
+
+/* ------------------------------------------------------------------
+ * 共用元件
+ * ------------------------------------------------------------------ */
+
+/* 搜尋列：白底 + 1px 內描邊，唔用陰影 */
+ion-searchbar {
+  --background: var(--pm-surface);
+  --border-radius: var(--pm-radius-sm);
+  --box-shadow: inset 0 0 0 1px var(--pm-line);
+  --color: var(--pm-ink);
+  --placeholder-color: var(--pm-ink-3);
+  --icon-color: var(--pm-ink-3);
+  --clear-button-color: var(--pm-ink-3);
+  padding: 0;
+  font-family: var(--pm-font);
+}
+
+/* 清單行：白底、細邊、行與行之間一條 1px 線（唔再每行一張浮起嘅卡） */
+ion-item {
+  --background: transparent;
+  --border-width: 0;
+  --inner-border-width: 0;
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+  --min-height: var(--pm-row);
+  font-family: var(--pm-font);
+}
+
+ion-input,
+ion-select,
+ion-textarea {
+  font-family: var(--pm-font);
+  --color: var(--pm-ink);
+  --placeholder-color: var(--pm-ink-3);
+  --placeholder-opacity: 1;
+}

@@ -1,0 +1,13 @@
+{
+  "name": "petmap-a2-server",
+  "version": "1.0.0",
+  "description": "PetMap A2 即時討論 Server（SSE）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^2.5.0"
+  }
+}

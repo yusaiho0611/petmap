@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>新增寵物友善地點</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="wrap">
+    <h2 class="pm-group-title">地點資料</h2>
+    <div class="pm-group">
+      <ion-item>
+        <ion-input label="地點名稱" labelPlacement="stacked" [(ngModel)]="pet_name" placeholder="例如：寵物公園"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="地區" labelPlacement="stacked" [(ngModel)]="district" placeholder="例如：油尖旺"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="地址" labelPlacement="stacked" [(ngModel)]="address" placeholder="請輸入詳細地址"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="tel" label="電話（選填）" labelPlacement="stacked" [(ngModel)]="phone" placeholder="例如：2307 0882"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="開放時間（選填）" labelPlacement="stacked" [(ngModel)]="hours" placeholder="例如：每日 06:30 - 23:00"></ion-input>
+      </ion-item>
+    </div>
+
+    <!--
+      座標：唔係個個用家識填，所以另外開一組、字級收細，
+      放埋「獲取當前 GPS 定位」做同一組嘅動作行，唔使四圍搵。
+    -->
+    <h2 class="pm-group-title">座標（地圖定位用）</h2>
+    <div class="pm-group coords">
+      <ion-item>
+        <ion-input label="緯度 (Lat)" labelPlacement="stacked" [(ngModel)]="pet_lat" placeholder="Latitude"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="經度 (Lon)" labelPlacement="stacked" [(ngModel)]="pet_lon" placeholder="Longitude"></ion-input>
+      </ion-item>
+
+      <button type="button" class="row-action" (click)="getGPS()">
+        <ion-icon name="locate-outline" aria-hidden="true"></ion-icon>
+        獲取當前 GPS 定位
+      </button>
+    </div>
+
+    <p class="hint">填好名稱同座標就儲存得；座標可以按上面掣自動填入。</p>
+
+    <!-- 主要動作壓在底部：一路填一路都撳得到，唔使滾到底 -->
+    <div class="save-bar">
+      <ion-button expand="block" class="save-btn" (click)="savePet()">
+        儲存寵物地點
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

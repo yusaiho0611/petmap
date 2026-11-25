@@ -1,0 +1,508 @@
+/* 整頁強制淺色底，避免手機開深色模式時文字跟黑底糊在一起 */
+ion-content {
+  --background: #ffffff;
+}
+
+/* 用 flex 令地圖撐滿剩餘空間，資料區貼在底部 */
+ion-content::part(scroll) {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 190px;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/*
+ * 底部資料面板：貼住地圖嘅一片白色。
+ * 以前頂部有 3px 橙色粗邊，太似裝飾；依家只用一條細線同淡淡陰影，
+ * 因為佢真係浮在地圖上面，陰影係有功能嘅（分開兩層）。
+ */
+.detail-box {
+  position: relative;
+  flex: 0 0 auto;
+  background: var(--pm-surface);
+  border-top: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius) var(--pm-radius) 0 0;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.07);
+  padding: 8px 16px 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+}
+
+/* 頂部一小條「把手」：提示呢塊可以當成 sheet 睇 */
+.grabber {
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin: 0 auto 12px;
+  border-radius: 2px;
+  background: var(--pm-line-strong);
+}
+
+.place-name {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--pm-ink);
+}
+
+/* 規格表：左邊標籤固定闊度，右邊數值對齊，睇落似工具 App 而唔係卡片 */
+.specs {
+  margin: 0;
+}
+
+.spec {
+  display: flex;
+  gap: 12px;
+  padding: 9px 0;
+}
+
+.spec + .spec {
+  border-top: 1px solid var(--pm-line);
+}
+
+.spec dt {
+  flex: 0 0 68px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--pm-ink-3);
+}
+
+.spec dd {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--pm-ink);
+}
+
+/* 刪除：做成一行低調嘅紅字，唔用一大塊 outline 按鈕 */
+.delete-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 10px 0 0;
+  border: 0;
+  border-top: 1px solid var(--pm-line);
+  background: none;
+  color: #c0392b;
+  font-family: var(--pm-font);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.delete-link ion-icon {
+  font-size: 17px;
+}
+
+.delete-link:active {
+  opacity: 0.6;
+}
+
+/* 現場相片 */
+.photos {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--pm-line);
+}
+
+.photo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.photo-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pm-ink);
+}
+
+.photo-count {
+  font-family: var(--pm-num-font);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--pm-ink-3);
+}
+
+.photo-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 999px;
+  background: var(--pm-surface);
+  color: var(--ion-color-primary);
+  font-family: var(--pm-font);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.photo-add[disabled] {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.photo-add ion-icon {
+  font-size: 15px;
+}
+
+.photo-empty {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--pm-ink-3);
+}
+
+.photo-strip {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-bottom: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.photo-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.photo {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.photo img {
+  display: block;
+  width: 76px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: var(--pm-radius-xs);
+  background: var(--pm-sunken);
+  cursor: zoom-in;
+}
+
+/* 檢舉：縮圖右上角一粒細旗 */
+.photo-report {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--pm-line-strong);
+  border-radius: 50%;
+  background: var(--pm-surface);
+  color: var(--pm-ink-2);
+  cursor: pointer;
+}
+
+.photo-report ion-icon {
+  font-size: 14px;
+}
+
+/* 放大預覽 */
+.photo-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(12, 14, 17, 0.92);
+}
+
+.photo-viewer img {
+  max-width: 100%;
+  max-height: 72vh;
+  border-radius: var(--pm-radius-sm);
+}
+
+.photo-meta {
+  margin: 0;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* 即時討論 */
+.live {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--pm-line);
+}
+
+.live-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.live-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pm-ink);
+}
+
+/* 標題前面一點 */
+.live-title::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+}
+
+.live-online {
+  font-family: var(--pm-num-font);
+  font-size: 12px;
+  color: var(--pm-ink-2);
+}
+
+.live-off {
+  font-family: var(--pm-font);
+  color: var(--pm-ink-3);
+}
+
+.live-name,
+.live-input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 11px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-sm);
+  background: var(--pm-surface);
+  color: var(--pm-ink);
+  font-family: var(--pm-font);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.live-name {
+  max-width: 170px;
+  margin-top: 12px;
+}
+
+.live-name::placeholder,
+.live-input::placeholder {
+  color: var(--pm-ink-3);
+}
+
+.live-name:focus,
+.live-input:focus {
+  outline: none;
+  border-color: var(--ion-color-primary);
+}
+
+/* 報料 chip：橫向滑，不佔兩行 */
+.reports {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-bottom: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.reports::-webkit-scrollbar {
+  display: none;
+}
+
+.report-chip {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border: 1px solid var(--pm-line);
+  border-radius: 999px;
+  background: var(--pm-surface);
+  color: var(--pm-ink);
+  font-family: var(--pm-font);
+  font-size: 12.5px;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.report-chip:active {
+  background: var(--pm-sunken);
+}
+
+/* 訊息列表：固定高度，自己捲，唔會逼走地圖 */
+.chat-list {
+  max-height: 120px;
+  margin-top: 12px;
+  padding: 4px 12px;
+  overflow-y: auto;
+  border-radius: var(--pm-radius-sm);
+  background: var(--pm-sunken);
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-empty {
+  margin: 0;
+  padding: 14px 0;
+  font-size: 13px;
+  color: var(--pm-ink-3);
+  text-align: center;
+}
+
+.chat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 0;
+}
+
+.chat-row + .chat-row {
+  border-top: 1px solid var(--pm-line-strong);
+}
+
+.chat-who {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--pm-ink-2);
+}
+
+.chat-time {
+  font-family: var(--pm-num-font);
+  font-size: 10.5px;
+  color: var(--pm-ink-3);
+}
+
+.chat-text {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--pm-ink);
+  word-break: break-word;
+}
+
+/* 報料用標籤樣式，一眼分得開 */
+.chat-report .chat-text {
+  align-self: flex-start;
+  padding: 4px 9px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-xs);
+  background: var(--pm-surface);
+  font-size: 13px;
+}
+
+.chat-send {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chat-send .live-input {
+  flex: 1 1 auto;
+  margin-top: 0;
+}
+
+.send-btn {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: var(--pm-radius-sm);
+  background: var(--ion-color-primary);
+  color: #ffffff;
+  font-family: var(--pm-font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.send-btn:active {
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------------
+ * Leaflet 原生介面
+ * 彈窗同縮放掣默認係一套通用白色泡泡，同 App 其他地方唔一致，
+ * 所以統一改成同一個語言：8px 圓角、細邊、細字。
+ * 呢啲元素由 Leaflet 動態插入，所以要 ::ng-deep 才選得到。
+ * ------------------------------------------------------------------ */
+::ng-deep .leaflet-popup-content-wrapper {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-sm);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .leaflet-popup-content {
+  margin: 10px 12px;
+  font-family: var(--pm-font);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--pm-ink);
+}
+
+::ng-deep .leaflet-popup-content b {
+  font-weight: 600;
+}
+
+::ng-deep .leaflet-popup-tip {
+  box-shadow: none;
+}
+
+::ng-deep .leaflet-popup-close-button {
+  padding: 6px 6px 0 0 !important;
+  color: var(--pm-ink-3) !important;
+}
+
+::ng-deep .leaflet-control-zoom {
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-sm);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+::ng-deep .leaflet-control-zoom a {
+  width: 32px;
+  height: 32px;
+  line-height: 30px;
+  color: var(--pm-ink);
+  font-size: 17px;
+  background: var(--pm-surface);
+}
+
+::ng-deep .leaflet-control-attribution {
+  padding: 1px 6px;
+  font-family: var(--pm-font);
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--pm-ink-2);
+}

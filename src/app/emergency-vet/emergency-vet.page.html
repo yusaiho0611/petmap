@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>緊急獸醫</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- 提示：改成左邊一條紅色細線，唔再用粉色圓角氣泡 -->
+  <p class="tip">以下診所提供 24 小時或夜間急症服務，出發前請先致電確認。</p>
+
+  <div class="vets">
+    <article class="vet" *ngFor="let vet of vets">
+      <!-- 卡片主要內容可點：點一下打開地圖看診所位置 -->
+      <div class="vet-main" (click)="openMap(vet)" role="button" tabindex="0">
+        <div class="vet-head">
+          <h2 class="vet-name">{{ vet.name }}</h2>
+          <span class="tag" [class.tag-24]="vet.is24Hours">
+            {{ vet.is24Hours ? '24 小時' : '夜間應診' }}
+          </span>
+        </div>
+
+        <p class="vet-sub">{{ vet.district }} · {{ vet.address }}</p>
+        <p class="vet-note" *ngIf="vet.notes">{{ vet.notes }}</p>
+      </div>
+
+      <!-- 模擬地圖：跟 mall 頁同一個 Leaflet 圖層，只顯示診所位置 -->
+      <div class="vet-map-wrap">
+        <div #vetMap class="vet-map"></div>
+      </div>
+
+      <!--
+        電話同「在地圖開啟」純粹顯示，不可點。
+        以前係兩粒淺粉紅色 disabled 按鈕，睇落似壞咗嘅掣；
+        依家還原做資料行：左邊電話號碼（等寬數字），右邊一個文字箭嘴。
+      -->
+      <div class="vet-foot">
+        <span class="vet-phone pm-num">
+          <ion-icon name="call-outline" aria-hidden="true"></ion-icon>
+          {{ vet.phone }}
+        </span>
+        <span class="vet-open" (click)="openMap(vet)">
+          在地圖開啟
+          <ion-icon name="chevron-forward" aria-hidden="true"></ion-icon>
+        </span>
+      </div>
+    </article>
+  </div>
+</ion-content>

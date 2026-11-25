@@ -1,0 +1,83 @@
+/* 表單頁：淺灰底 + 白色分組區塊，同清單頁用返同一套語言 */
+.wrap {
+  padding: 4px 16px 0;
+}
+
+/* 分組區塊內嘅 ion-item 由 global 統一處理，呢度只調內距 */
+.pm-group ion-item {
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+  --min-height: 62px;
+}
+
+/* 輸入框標籤（stacked）用細灰字，唔好同輸入內容爭 */
+.pm-group ion-input::part(label) {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--pm-ink-3);
+}
+
+/* 座標屬進階資料：字級收細一級，睇落就知唔一定要填 */
+.coords ion-input::part(label) {
+  font-size: 12px;
+}
+
+.coords ion-input {
+  --color: var(--pm-ink-2);
+  font-size: 14px;
+}
+
+/* 分組裡面嘅動作行：白色底、橙色內容，同一般欄位一樣高 */
+.row-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: var(--ion-color-primary);
+  font-family: var(--pm-font);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row-action ion-icon {
+  font-size: 18px;
+}
+
+.row-action:active {
+  background: #fff8f2;
+}
+
+.hint {
+  margin: 10px 2px 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--pm-ink-3);
+}
+
+/* 儲存：壓在底部嘅一條，滾到邊都撳得到 */
+.save-bar {
+  position: sticky;
+  bottom: 0;
+  margin: 16px -16px 0;
+  padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+  background: var(--pm-bg);
+  border-top: 1px solid var(--pm-line);
+}
+
+.save-btn {
+  --background: var(--ion-color-primary);
+  --background-activated: var(--ion-color-primary-shade);
+  --border-radius: var(--pm-radius-sm);
+  --box-shadow: none;
+  height: 46px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}

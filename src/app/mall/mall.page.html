@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ pet_name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="map-wrap">
+    <div id="map"></div>
+  </div>
+
+  <div class="detail-box">
+    <span class="grabber" aria-hidden="true"></span>
+
+    <h1 class="place-name">{{ pet_name }}</h1>
+
+    <dl class="specs">
+      <div class="spec">
+        <dt>地址</dt>
+        <dd>{{ address || '未提供地址' }}</dd>
+      </div>
+      <div class="spec">
+        <dt>開放時間</dt>
+        <dd>{{ hours || '未提供開放時間' }}</dd>
+      </div>
+      <div class="spec">
+        <dt>電話</dt>
+        <dd class="pm-num">{{ phone || '未提供電話' }}</dd>
+      </div>
+    </dl>
+
+    <!-- 現場相片：影相／揀相 → 上傳 → 同一個地點的人即時見到 -->
+    <section class="photos" aria-label="現場相片">
+      <div class="photo-head">
+        <h2 class="photo-title">
+          現場相片
+          <span class="photo-count" *ngIf="photos.length > 0">{{ photos.length }}</span>
+        </h2>
+        <button type="button" class="photo-add" (click)="takePhoto()" [disabled]="uploading">
+          <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>
+          {{ uploading ? '上傳中…' : '影相' }}
+        </button>
+      </div>
+
+      <p class="photo-empty" *ngIf="photos.length === 0">
+        仲未有相。影一張，話俾其他人知而家咩環境。
+      </p>
+
+      <div class="photo-strip" *ngIf="photos.length > 0">
+        <figure class="photo" *ngFor="let p of photos">
+          <img [src]="photoSrc(p)" [alt]="p.name + ' 上傳的相片'" (click)="openPhoto(p)" />
+          <button type="button" class="photo-report" (click)="reportPhoto(p)" aria-label="檢舉這張相">
+            <ion-icon name="flag-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </figure>
+      </div>
+    </section>
+
+    <section class="live" aria-label="即時討論">
+      <div class="live-head">
+        <h2 class="live-title">即時討論</h2>
+        <span class="live-online" [class.live-off]="!connected">
+          {{ connected ? onlineCount + ' 人在線' : '連線中…' }}
+        </span>
+      </div>
+
+      <input
+        class="live-name"
+        [(ngModel)]="myName"
+        (change)="saveName()"
+        placeholder="你的暱稱（例：阿明）"
+        maxlength="12"
+        aria-label="你的暱稱" />
+
+      <!-- 一按即送，唔使打字 -->
+      <div class="reports">
+        <button
+          type="button"
+          class="report-chip"
+          *ngFor="let r of quickReports"
+          (click)="sendReport(r)">
+          {{ r }}
+        </button>
+      </div>
+
+      <div class="chat-list" id="chat-list">
+        <p class="chat-empty" *ngIf="chatMessages.length === 0">
+          還沒有人出聲，你可以第一個報料。
+        </p>
+
+        <div
+          class="chat-row"
+          *ngFor="let m of chatMessages"
+          [class.chat-report]="m.type === 'report'">
+          <span class="chat-who">
+            {{ m.name }}
+            <time class="chat-time">{{ m.time | date: 'HH:mm' }}</time>
+          </span>
+          <span class="chat-text">{{ m.text }}</span>
+        </div>
+      </div>
+
+      <div class="chat-send">
+        <input
+          class="live-input"
+          [(ngModel)]="draft"
+          (keyup.enter)="sendChat()"
+          placeholder="問問現場情況…"
+          maxlength="80"
+          aria-label="輸入訊息" />
+        <button type="button" class="send-btn" (click)="sendChat()">送出</button>
+      </div>
+    </section>
+
+    <button type="button" class="delete-link" *ngIf="isUserAdded" (click)="confirmDelete()">
+      <ion-icon name="trash-outline" aria-hidden="true"></ion-icon>
+      刪除這個地點
+    </button>
+  </div>
+
+  <!-- 點縮圖放大 -->
+  <div class="photo-viewer" *ngIf="viewing as photo" (click)="closePhoto()">
+    <img [src]="photoSrc(photo)" [alt]="photo.name + ' 的相片'" />
+    <p class="photo-meta">{{ photo.name }} · {{ photo.time | date: 'MM-dd HH:mm' }}</p>
+  </div>
+</ion-content>

@@ -1,0 +1,86 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * 這個 App 用固定淺色主題（橙＋白），所以不載入 dark.system.css。
+ * 否則手機開深色模式時，搜尋列會變成一塊黑色壓在橙色標題欄上。
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+/* @import "@ionic/angular/css/palettes/dark.system.css"; */
+/* 引入 Leaflet 地圖樣式 */
+@import 'leaflet/dist/leaflet.css';
+
+/* ==================================================================
+ * 全 App 版面基準
+ * 只放跨頁共用嘅東西：字體、底色、分組區塊、清單細線。
+ * 個別頁面嘅樣式留在各自嘅 .page.scss，唔好喺呢度加單頁嘢。
+ * ================================================================== */
+
+body {
+  font-family: var(--pm-font);
+  color: var(--pm-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 內容區預設淺灰底，白色區塊先浮得出來（同 iOS / Google 清單頁一致） */
+ion-content {
+  --background: var(--pm-bg);
+}
+
+/* 分組區塊：白底 + 1px 細邊 + 10px 圓角，取代以前「張張卡都加陰影」 */
+.pm-group {
+  background: var(--pm-surface);
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius);
+  overflow: hidden;
+}
+
+/* 分組區塊內嘅行：行與行之間一條細線，最後一行唔補線 */
+.pm-group > * + * {
+  border-top: 1px solid var(--pm-line);
+}
+
+/* 分組標題：細楷灰色，唔搶眼但建立到層次 */
+.pm-group-title {
+  margin: 0;
+  padding: 10px 4px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: var(--pm-ink-3);
+}
+
+/* 數字（電話、時間、座標）：等寬，對齊唔會跳 */
+.pm-num {
+  font-family: var(--pm-num-font);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}

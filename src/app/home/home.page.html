@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>寵物友好地圖</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openEmergencyVets()" aria-label="緊急獸醫">
+        <ion-icon slot="icon-only" name="medkit-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="addPet()" aria-label="新增地點">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="search-bar">
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterPets()"
+      placeholder="搜尋公園、地區或地址"
+      animated="true">
+    </ion-searchbar>
+  </div>
+
+  <div class="filters" role="tablist" aria-label="地區篩選">
+    <button
+      type="button"
+      class="chip"
+      role="tab"
+      [class.chip-on]="!selectedRegion"
+      [attr.aria-selected]="!selectedRegion"
+      (click)="selectRegion()">
+      全部
+    </button>
+    <button
+      type="button"
+      class="chip"
+      role="tab"
+      *ngFor="let r of regions"
+      [class.chip-on]="selectedRegion === r"
+      [attr.aria-selected]="selectedRegion === r"
+      (click)="selectRegion(r)">
+      {{ r }}
+    </button>
+  </div>
+
+  <button type="button" class="resume" *ngIf="lastPlace" (click)="continueLast()">
+    <span class="resume-label">上次去過</span>
+    <span class="resume-place">{{ lastPlace }}</span>
+    <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+  </button>
+
+  <div class="list" *ngIf="groups.length > 0; else emptyState">
+    <section class="bucket" *ngFor="let g of groups">
+      <h2 class="pm-group-title">{{ g.region }}<span class="bucket-count">{{ g.items.length }}</span></h2>
+
+      <div class="pm-group">
+        <div
+          class="row"
+          *ngFor="let p of g.items"
+          (click)="toPetDetail(p)"
+          role="button"
+          tabindex="0">
+          <div class="row-main">
+            <p class="row-title">{{ p.pet_name }}</p>
+            <p class="row-sub">{{ p.district ? p.district + ' · ' : '' }}{{ p.address }}</p>
+
+            <p class="row-live" *ngIf="onlineOf(p.pet_name) > 0 || reportLine(p.pet_name) || photoCountOf(p.pet_name) > 0">
+              <span class="live-people" *ngIf="onlineOf(p.pet_name) > 0">
+                <span class="live-dot" aria-hidden="true"></span>{{ onlineOf(p.pet_name) }} 人在線
+              </span>
+              <span class="live-report" *ngIf="reportLine(p.pet_name)">
+                {{ reportLine(p.pet_name) }}
+              </span>
+              <span class="live-photo" *ngIf="photoCountOf(p.pet_name) > 0">
+                <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>{{ photoCountOf(p.pet_name) }}
+              </span>
+            </p>
+          </div>
+
+          <span class="badge-unread" *ngIf="unreadOf(p.pet_name) > 0">
+            {{ unreadOf(p.pet_name) > 99 ? '99+' : unreadOf(p.pet_name) }}
+          </span>
+
+          <ion-icon class="row-arrow" name="chevron-forward" aria-hidden="true"></ion-icon>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 自己報過的料，存在 localStorage -->
+  <section class="my-reports" *ngIf="myReports.length > 0">
+    <h2 class="pm-group-title">我的報料<span class="bucket-count">{{ myReports.length }}</span></h2>
+
+    <div class="pm-group">
+      <div class="row report-row" *ngFor="let r of myReports">
+        <div class="row-main">
+          <p class="row-title">{{ r.text }}</p>
+          <p class="row-sub">{{ r.place }} · {{ r.time | date: 'MM-dd HH:mm' }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ng-template #emptyState>
+    <p class="empty">這個地區暫時沒有地點，選「全部」看看其他地區。</p>
+  </ng-template>
+</ion-content>

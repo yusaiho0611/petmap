@@ -1,0 +1,233 @@
+/* 搜尋列：左右留白跟清單一致，唔好一塊白色貼到邊 */
+.search-bar {
+  padding: 12px 16px 0;
+}
+
+/* 大區篩選：橫向一排 chip，闊度唔夠可以左右推 */
+.filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: 0 0 auto;
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid var(--pm-line);
+  border-radius: 15px;
+  background: var(--pm-surface);
+  color: var(--pm-ink-2);
+  font-family: var(--pm-font);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+
+/* 選中：橙色填滿。呢個係畫面上唯一大面積用橙嘅位，所以一眼就睇得出 */
+.chip-on {
+  background: var(--ion-color-primary);
+  border-color: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  font-weight: 600;
+}
+
+.list {
+  padding: 8px 16px 24px;
+}
+
+.bucket + .bucket {
+  margin-top: 16px;
+}
+
+/* 分組標題右邊嘅數目，用返細楷灰，唔好搶 */
+.bucket-count {
+  margin-left: 6px;
+  font-weight: 500;
+  color: var(--pm-ink-3);
+  opacity: 0.85;
+}
+
+/* 一行地點：左邊名稱＋地址，右邊箭嘴。冇圖示、冇徽章、冇陰影 */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--pm-row);
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+.row:active {
+  background: #fafbfc;
+}
+
+.row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.row-title {
+  margin: 0 0 3px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pm-ink);
+  line-height: 1.3;
+}
+
+.row-sub {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--pm-ink-2);
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-arrow {
+  flex: 0 0 auto;
+  font-size: 16px;
+  color: #c3c8ce;
+}
+
+.empty {
+  margin: 40px 24px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--pm-ink-3);
+  text-align: center;
+}
+
+/* 上次瀏覽 */
+.resume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: calc(100% - 32px);
+  margin: 10px 16px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--pm-line);
+  border-radius: var(--pm-radius-sm);
+  background: var(--pm-surface);
+  color: var(--pm-ink);
+  font-family: var(--pm-font);
+  text-align: left;
+  cursor: pointer;
+}
+
+.resume-label {
+  flex: 0 0 auto;
+  font-size: 12px;
+  color: var(--pm-ink-3);
+}
+
+.resume-place {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume ion-icon {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: #c3c8ce;
+}
+
+.resume:active {
+  background: #fafbfc;
+}
+
+/* 每行的即時概況 */
+.row-live {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0 0;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--pm-ink-2);
+}
+
+/* 綠點 = 有人在線 */
+.live-people {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2ecc71;
+}
+
+/* 報料用主色 */
+.live-report {
+  max-width: 160px;
+  font-weight: 500;
+  color: var(--ion-color-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 相片數 */
+.live-photo {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--pm-ink-3);
+  font-family: var(--pm-num-font);
+  font-size: 11px;
+}
+
+.live-photo ion-icon {
+  font-size: 12px;
+}
+
+/* 未讀數 */
+.badge-unread {
+  flex: 0 0 auto;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--ion-color-primary);
+  color: #ffffff;
+  font-family: var(--pm-num-font);
+  font-size: 10.5px;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* 我的報料 */
+.my-reports {
+  padding: 0 16px 28px;
+}
+
+.my-reports .pm-group-title {
+  margin-top: 8px;
+}
+
+.report-row {
+  cursor: default;
+}
+
+.report-row:active {
+  background: none;
+}
