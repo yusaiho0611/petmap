@@ -16,7 +16,7 @@
   <header class="masthead">
     <p class="masthead-eyebrow">MAP · LIVE · CHAT</p>
     <h1 class="masthead-title">香港寵物友善地圖</h1>
-    <p class="masthead-sub">六個地點，即時現場狀況、討論同相片</p>
+    <p class="masthead-sub">{{ allPets.length }} 個地點，即時現場狀況、討論同相片</p>
   </header>
 
   <div class="search-bar">
@@ -69,11 +69,14 @@
           tabindex="0">
 
           <span class="row-thumb" [style.background]="regionTint(p)" aria-hidden="true">
-            <ion-icon name="paw"></ion-icon>
+            <ion-icon [name]="p.kind === 'mall' ? 'storefront' : 'paw'"></ion-icon>
           </span>
 
           <div class="row-main">
-            <p class="row-title">{{ p.pet_name }}</p>
+            <p class="row-title">
+              {{ p.pet_name }}
+              <span class="kind-tag" *ngIf="p.kind === 'mall'">商場</span>
+            </p>
             <p class="row-sub">{{ p.district ? p.district + ' · ' : '' }}{{ p.address }}</p>
 
             <p class="row-live" *ngIf="onlineOf(p.pet_name) > 0 || reportLine(p.pet_name) || photoCountOf(p.pet_name) > 0">

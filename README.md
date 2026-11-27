@@ -1,4 +1,4 @@
-# PetMap — 香港寵物友善地點地圖（即時版）
+﻿# PetMap — 香港寵物友善地點地圖（即時版）
 
 為香港寵物主人而做的地點地圖：搵到邊度可以帶狗入、現場而家幾多人、以及同其他主人即時交流。
 
@@ -24,7 +24,7 @@ PetMap 的答案：**每個地點都有即時現場狀況 + 一個屬於該地�
 ## 2. 功能
 
 ### A1 已完成
-- 六個香港寵物友善地點目錄，按「香港／九龍／新界」分區
+- 九個香港寵物友善地點（六個公園／海濱 + 三個商場），按「香港／九龍／新界」分區
 - 關鍵字搜尋（名稱、地區、地址）
 - Leaflet 地圖顯示位置（OpenStreetMap 圖磚，不用付費 API）
 - Capacitor Geolocation 取得目前座標，新增地點
@@ -114,7 +114,7 @@ Render 免費層：15 分鐘無流量會休眠，第一次開約需 50 秒。
 
 | 資料 | 位置 | 會不會消失 |
 |---|---|---|
-| 地點清單 | localStorage `pet_places_v5` | 不會（除非清瀏覽器資料） |
+| 地點清單 | localStorage `pet_places_v6` | 不會（除非清瀏覽器資料） |
 | 暱稱 | localStorage `chat_name` | 不會 |
 | 已讀進度 | localStorage `pm_last_seen` | 不會 |
 | 我的報料 | localStorage `pm_my_reports` | 不會（保留最近 20 條） |
@@ -196,6 +196,7 @@ Render 免費層：15 分鐘無流量會休眠，第一次開約需 50 秒。
 8. **檔案沒有清理**：被隱藏或過舊的相片仍然留在 `server/uploads/`，正式要用排程清理或物件儲存（S3）。
 9. **相片沒有壓縮**：上傳原圖（已限 5 MB），沒有生成縮圖，流動數據用量較大。
 10. **刪除相片靠暱稱核對**：沒有帳號系統，所以 server 只能比對上傳時的暱稱。換裝置或清了 localStorage 就無法刪回自己上傳的相片。
+11. **商場資料未逐一官方核實**：AIRSIDE／圍方／赤柱廣場的寵物設施參考維基百科（2026-11），寵物政策以商場公告為準；座標為地標中心點，未必是入口位置。
 
 ---
 
@@ -291,3 +292,5 @@ PetMap/
 - 科目：Cross Platform Mobile Application Development 2026-2027
 - 評核：Project（Group，40%）
 - 提交：`Group?_Project.zip`（包含整個專案與 `server/`，**不包含** `node_modules/`），另交 slides（.pptx/.pdf）、2–3 分鐘示範影片（.mp4）、peer evaluation
+
+

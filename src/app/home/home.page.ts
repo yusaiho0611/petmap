@@ -65,6 +65,39 @@ const DEFAULT_PLACES: PetPlace[] = [
     hours: '每日 06:30 - 23:00',
     pet_lat: 22.3363,
     pet_lon: 114.1364
+  },
+  // ---- 商場 ----
+  // 資料參考維基百科（2026-11），實際寵物政策以商場公告為準；
+  // 商場電話同開放時間未逐一核實，所以留空／寫「請參考商場官網」。
+  {
+    pet_name: 'AIRSIDE',
+    district: '九龍城',
+    address: '啟德協調道2號',
+    phone: '',
+    hours: '請參考商場官網',
+    pet_lat: 22.33137,
+    pet_lon: 114.19822,
+    kind: 'mall'
+  },
+  {
+    pet_name: '圍方 The Wai',
+    district: '沙田',
+    address: '大圍車公廟路18號',
+    phone: '',
+    hours: '請參考商場官網',
+    pet_lat: 22.37305,
+    pet_lon: 114.1786,
+    kind: 'mall'
+  },
+  {
+    pet_name: '赤柱廣場',
+    district: '南區',
+    address: '赤柱馬坑邨佳美道',
+    phone: '',
+    hours: '請參考商場官網',
+    pet_lat: 22.2184,
+    pet_lon: 114.2137,
+    kind: 'mall'
   }
 ];
 

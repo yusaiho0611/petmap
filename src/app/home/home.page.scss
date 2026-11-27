@@ -130,6 +130,19 @@
   letter-spacing: -0.1px;
 }
 
+/* 商場標籤：跟「即時」同一個橙色系，但用細框，唔搶過報料 */
+.kind-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border: 1px solid var(--ion-color-primary-shade);
+  border-radius: 2px;
+  color: var(--ion-color-primary-shade);
+  font-size: 10px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
 .row-sub {
   margin: 0;
   font-size: 12px;

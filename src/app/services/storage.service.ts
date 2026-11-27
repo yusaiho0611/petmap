@@ -20,7 +20,8 @@ export interface MyPhoto {
  */
 @Injectable({ providedIn: 'root' })
 export class StorageService {
-  private readonly KEY_PLACES = 'pet_places_v5';
+  // 由 v5 升到 v6：預設地點加咗商場，舊的本機資料唔會自動有新地點
+  private readonly KEY_PLACES = 'pet_places_v6';
   private readonly KEY_NAME = 'chat_name';
   private readonly KEY_LAST_PLACE = 'pm_last_place';
   private readonly KEY_LAST_SEEN = 'pm_last_seen';

@@ -1,4 +1,4 @@
-# PetMap — Pet-Friendly Places in Hong Kong (Live Edition)
+﻿# PetMap — Pet-Friendly Places in Hong Kong (Live Edition)
 
 A map of pet-friendly places in Hong Kong: find out where dogs are welcome, how busy it is right now, and talk to other owners on the spot.
 
@@ -24,7 +24,7 @@ PetMap's answer: **every place carries a live status and its own discussion thre
 ## 2. Features
 
 ### Built in A1
-- Six pet-friendly places, grouped into Hong Kong Island / Kowloon / New Territories
+- Nine pet-friendly places (six parks / promenades plus three malls), grouped into Hong Kong Island / Kowloon / New Territories
 - Keyword search over name, district and address
 - Leaflet map (OpenStreetMap tiles — no paid API key)
 - Capacitor Geolocation to capture the current position when adding a place
@@ -115,7 +115,7 @@ Render free tier: the instance sleeps after 15 minutes idle, so the first load c
 
 | Data | Location | Survives restart? |
 |---|---|---|
-| Places | localStorage `pet_places_v5` | Yes (unless browser data is cleared) |
+| Places | localStorage `pet_places_v6` | Yes (unless browser data is cleared) |
 | Nickname | localStorage `chat_name` | Yes |
 | Read position | localStorage `pm_last_seen` | Yes |
 | My reports | localStorage `pm_my_reports` | Yes (last 20) |
@@ -290,3 +290,4 @@ PetMap/
 - Subject: Cross Platform Mobile Application Development 2026-2027
 - Assessment: Project (group, 40%)
 - Submission: `Group?_Project.zip` (the whole project including `server/`, **excluding** `node_modules/`), plus slides (.pptx/.pdf), a 2–3 minute demo video (.mp4) and the peer evaluation form
+
