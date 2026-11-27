@@ -40,6 +40,7 @@ PetMap's answer: **every place carries a live status and its own discussion thre
 - **Readable offline** — messages are cached locally, so the history survives a server shutdown and the header shows "connecting…"
 - **On-site photos** — tap "photo / pick", choose an image (desktop file picker, or Camera / Album on a phone); once uploaded it is pushed live to everyone viewing that place, and tapping a thumbnail opens it full size
 - **Photo reporting** — three reports hide a photo automatically, and one person can report the same photo only once
+- **Delete your own photo** — photos you uploaded get a red × in the corner; confirming removes it for everyone and deletes the file from disk (the server checks the nickname used at upload time)
 
 ---
 
@@ -193,6 +194,7 @@ A live feature is only worth something when enough people are online at once. Mi
 7. **Photos are not moderated** — the only control is "three reports hide it"; there is no human review or automated image classification.
 8. **No file cleanup** — hidden and old photos stay in `server/uploads/`. A production build needs a scheduled job or object storage (S3).
 9. **No image compression** — the original file is stored (capped at 5 MB); no thumbnails are generated, so mobile data use is high.
+10. **Photo deletion relies on the nickname** — without accounts the server can only compare the nickname used at upload. On another device, or after clearing localStorage, you cannot delete your own photo.
 
 ---
 
