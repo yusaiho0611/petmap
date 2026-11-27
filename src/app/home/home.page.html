@@ -1,18 +1,24 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>寵物友好地圖</ion-title>
+  <ion-toolbar>
+    <ion-title>PetMap</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="openEmergencyVets()" aria-label="緊急獸醫">
-        <ion-icon slot="icon-only" name="medkit-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="addPet()" aria-label="新增地點">
-        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
-      </ion-button>
+      <button type="button" class="icon-btn" (click)="openEmergencyVets()" aria-label="緊急獸醫">
+        <ion-icon name="medkit-outline"></ion-icon>
+      </button>
+      <button type="button" class="icon-btn" (click)="addPet()" aria-label="新增地點">
+        <ion-icon name="add-outline"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <header class="masthead">
+    <p class="masthead-eyebrow">香港 · 寵物友善</p>
+    <h1 class="masthead-title">帶狗去邊度好？</h1>
+    <p class="masthead-sub">六個地點，即時現場狀況、討論同相片</p>
+  </header>
+
   <div class="search-bar">
     <ion-searchbar
       [(ngModel)]="searchTerm"
@@ -61,6 +67,11 @@
           (click)="toPetDetail(p)"
           role="button"
           tabindex="0">
+
+          <span class="row-thumb" [style.background]="regionTint(p)" aria-hidden="true">
+            <ion-icon name="paw"></ion-icon>
+          </span>
+
           <div class="row-main">
             <p class="row-title">{{ p.pet_name }}</p>
             <p class="row-sub">{{ p.district ? p.district + ' · ' : '' }}{{ p.address }}</p>

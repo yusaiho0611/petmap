@@ -187,6 +187,22 @@ export class HomePage implements OnInit {
     return live ? live.photoCount : 0;
   }
 
+  /** 清單左邊的小色塊：用大區分色，一眼分得出地區。 */
+  regionTint(pet: PetPlace): string {
+    const region = getRegion(pet.district);
+
+    if (region === '香港') {
+      return '#ffe0c7';
+    }
+    if (region === '九龍') {
+      return '#d8ecdf';
+    }
+    if (region === '新界') {
+      return '#d9e4f2';
+    }
+    return '#e9e3d8';
+  }
+
   /** 只顯示 30 分鐘內的報料，太舊就當冇，免得誤導。 */
   reportLine(place: string): string {
     const live = this.liveInfo[place];

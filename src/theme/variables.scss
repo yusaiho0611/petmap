@@ -33,20 +33,25 @@
    * 顏色、圓角、字級集中在這裡，各頁只引用變數，唔再各自寫死數值。
    * ------------------------------------------------------------------ */
 
-  /* 底色與文字：由「純白 + 純黑」改成帶少少灰調，冇咁刺眼 */
-  --pm-bg: #f4f5f7;          /* 頁面底色 */
+  /* 暖紙色底 + 墨黑：唔用純白純黑，印刷感重啲 */
+  --pm-bg: #f6f2ea;          /* 頁面底色（暖紙） */
   --pm-surface: #ffffff;     /* 卡片／清單底 */
-  --pm-sunken: #eef0f3;      /* 內嵌區塊（小地圖外框等） */
-  --pm-line: #e6e8eb;        /* 1px 分隔線、輸入框邊框 */
-  --pm-line-strong: #d5d9de;
-  --pm-ink: #1c1f23;         /* 主要文字 */
-  --pm-ink-2: #5b6470;       /* 次要文字：地區、地址、時段 */
-  --pm-ink-3: #949aa3;       /* 提示、placeholder */
+  --pm-sunken: #efe9dd;      /* 內嵌區塊（小地圖外框、訊息列表） */
+  --pm-line: #ddd6c8;        /* 1px 分隔線 */
+  --pm-line-strong: #c9c1b1;
+  --pm-ink: #14161a;         /* 主要文字 */
+  --pm-ink-2: #5a544b;       /* 次要文字 */
+  --pm-ink-3: #8d8578;       /* 提示、placeholder */
 
-  /* 圓角：由 14px 收到 10px，減少「一舊舊圓角」嘅塑膠感 */
-  --pm-radius: 10px;
-  --pm-radius-sm: 8px;
-  --pm-radius-xs: 5px;
+  /* 粗邊框用的墨色 + 硬陰影（唔用模糊陰影） */
+  --pm-edge: #14161a;
+  --pm-shadow: 4px 4px 0 var(--pm-edge);
+  --pm-shadow-sm: 3px 3px 0 var(--pm-edge);
+
+  /* 圓角收窄：貼近印刷／貼紙感，唔再一舊舊圓角 */
+  --pm-radius: 2px;
+  --pm-radius-sm: 2px;
+  --pm-radius-xs: 2px;
 
   /* 點擊區與行高 */
   --pm-tap: 44px;
@@ -56,18 +61,22 @@
   --pm-font: -apple-system, BlinkMacSystemFont, "PingFang HK", "PingFang TC",
     "Noto Sans HK", "Microsoft JhengHei", "Helvetica Neue", Arial, sans-serif;
 
+  /* 標題用的襯線字（用系統字，唔下載字體檔） */
+  --pm-serif: "Songti TC", "Noto Serif TC", "PMingLiU", "SimSun", Georgia, serif;
+
   /* 電話、時間、座標用等寬數字，掃落去唔會跳 */
   --pm-num-font: ui-monospace, "SF Mono", "Roboto Mono", "Consolas", monospace;
 }
 
 /* ------------------------------------------------------------------
  * 標題欄
- * 橙色照留，但文字靠左、字級收到 17px，右邊按鈕唔再逼到標題跳位。
+ * 由「整條橙色」改成白底 + 2px 墨線，橙色留返俾「即時」資訊用。
  * ------------------------------------------------------------------ */
 ion-toolbar {
-  --min-height: 52px;
-  --border-width: 0 0 1px 0;
-  --border-color: rgba(0, 0, 0, 0.1);
+  --background: var(--pm-surface);
+  --min-height: 54px;
+  --border-width: 0 0 2px 0;
+  --border-color: var(--pm-edge);
   --border-style: solid;
 }
 
@@ -82,35 +91,63 @@ ion-toolbar ion-title {
   flex: 1 1 auto;
   text-align: start;
   padding-inline: 16px;
-  font-family: var(--pm-font);
-  font-size: 17px;
-  font-weight: 600;
+  font-family: var(--pm-serif);
+  font-size: 19px;
+  font-weight: 700;
   letter-spacing: 0.2px;
+  color: var(--pm-ink);
 }
 
 ion-toolbar ion-button {
-  --color: #ffffff;
+  --color: var(--pm-ink);
   --padding-start: 8px;
   --padding-end: 8px;
   height: 40px;
 }
 
 ion-toolbar ion-back-button {
-  --color: #ffffff;
+  --color: var(--pm-ink);
+}
+
+/* 標題欄的方形圖示按鈕（2px 墨邊，貼紙感） */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-inline: 4px;
+  padding: 0;
+  border: 2px solid var(--pm-edge);
+  border-radius: var(--pm-radius);
+  background: var(--pm-surface);
+  box-shadow: var(--pm-shadow-sm);
+  color: var(--pm-ink);
+  cursor: pointer;
+}
+
+.icon-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--pm-edge);
+}
+
+.icon-btn ion-icon {
+  font-size: 18px;
 }
 
 /* ------------------------------------------------------------------
  * 共用元件
  * ------------------------------------------------------------------ */
 
-/* 搜尋列：白底 + 1px 內描邊，唔用陰影 */
+/* 搜尋列：白底 + 2px 墨邊，唔用陰影
+   （Ionic 自己的 :host 樣式用 class 選擇器，所以要 !important 才蓋得過） */
 ion-searchbar {
   --background: var(--pm-surface);
-  --border-radius: var(--pm-radius-sm);
-  --box-shadow: inset 0 0 0 1px var(--pm-line);
+  --border-radius: var(--pm-radius);
+  --box-shadow: inset 0 0 0 2px var(--pm-edge) !important;
   --color: var(--pm-ink);
   --placeholder-color: var(--pm-ink-3);
-  --icon-color: var(--pm-ink-3);
+  --icon-color: var(--pm-ink);
   --clear-button-color: var(--pm-ink-3);
   padding: 0;
   font-family: var(--pm-font);

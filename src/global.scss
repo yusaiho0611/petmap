@@ -47,19 +47,21 @@
 body {
   font-family: var(--pm-font);
   color: var(--pm-ink);
+  background: var(--pm-bg);
   -webkit-font-smoothing: antialiased;
 }
 
-/* 內容區預設淺灰底，白色區塊先浮得出來（同 iOS / Google 清單頁一致） */
+/* 內容區預設暖紙底，白色區塊先浮得出來 */
 ion-content {
   --background: var(--pm-bg);
 }
 
-/* 分組區塊：白底 + 1px 細邊 + 10px 圓角，取代以前「張張卡都加陰影」 */
+/* 分組區塊：白底 + 2px 墨邊 + 硬陰影（貼紙／印刷感，取代模糊陰影） */
 .pm-group {
   background: var(--pm-surface);
-  border: 1px solid var(--pm-line);
+  border: 2px solid var(--pm-edge);
   border-radius: var(--pm-radius);
+  box-shadow: var(--pm-shadow-sm);
   overflow: hidden;
 }
 
@@ -68,14 +70,18 @@ ion-content {
   border-top: 1px solid var(--pm-line);
 }
 
-/* 分組標題：細楷灰色，唔搶眼但建立到層次 */
+/* 分組標題：襯線字，建立「目錄」層次 */
 .pm-group-title {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   margin: 0;
-  padding: 10px 4px 6px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  color: var(--pm-ink-3);
+  padding: 14px 2px 8px;
+  font-family: var(--pm-serif);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--pm-ink);
 }
 
 /* 數字（電話、時間、座標）：等寬，對齊唔會跳 */

@@ -1,9 +1,40 @@
-/* 搜尋列：左右留白跟清單一致，唔好一塊白色貼到邊 */
-.search-bar {
-  padding: 12px 16px 0;
+/* 主頁：雜誌式標頭 + 粗邊框卡片 */
+
+.masthead {
+  padding: 22px 16px 6px;
 }
 
-/* 大區篩選：橫向一排 chip，闊度唔夠可以左右推 */
+.masthead-eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: var(--pm-ink-3);
+}
+
+.masthead-title {
+  margin: 8px 0 8px;
+  font-family: var(--pm-serif);
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  color: var(--pm-ink);
+}
+
+.masthead-sub {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--pm-ink-2);
+}
+
+/* 搜尋列：左右留白跟清單一致 */
+.search-bar {
+  padding: 14px 16px 0;
+}
+
+/* 大區篩選：一排方形 chip，橫向推得動 */
 .filters {
   display: flex;
   gap: 8px;
@@ -18,56 +49,71 @@
 
 .chip {
   flex: 0 0 auto;
-  height: 30px;
-  padding: 0 14px;
-  border: 1px solid var(--pm-line);
-  border-radius: 15px;
+  height: 32px;
+  padding: 0 13px;
+  border: 2px solid var(--pm-edge);
+  border-radius: var(--pm-radius);
   background: var(--pm-surface);
-  color: var(--pm-ink-2);
+  color: var(--pm-ink);
   font-family: var(--pm-font);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12.5px;
+  font-weight: 600;
   line-height: 1;
   cursor: pointer;
-  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+  transition: background-color 0.12s ease, color 0.12s ease;
 }
 
-/* 選中：橙色填滿。呢個係畫面上唯一大面積用橙嘅位，所以一眼就睇得出 */
+/* 選中：墨黑填滿。橙色留返俾「即時」資訊，唔做裝飾 */
 .chip-on {
-  background: var(--ion-color-primary);
-  border-color: var(--ion-color-primary);
-  color: var(--ion-color-primary-contrast);
-  font-weight: 600;
+  background: var(--pm-ink);
+  border-color: var(--pm-ink);
+  color: var(--pm-bg);
 }
 
 .list {
-  padding: 8px 16px 24px;
+  padding: 6px 16px 24px;
 }
 
 .bucket + .bucket {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
-/* 分組標題右邊嘅數目，用返細楷灰，唔好搶 */
 .bucket-count {
-  margin-left: 6px;
+  font-family: var(--pm-num-font);
+  font-size: 11.5px;
   font-weight: 500;
   color: var(--pm-ink-3);
-  opacity: 0.85;
 }
 
-/* 一行地點：左邊名稱＋地址，右邊箭嘴。冇圖示、冇徽章、冇陰影 */
+/* 一行地點：左邊地區色塊，中間名稱＋地址＋即時資訊 */
 .row {
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: var(--pm-row);
-  padding: 12px 14px;
+  min-height: 72px;
+  padding: 12px;
   cursor: pointer;
 }
 
 .row:active {
-  background: #fafbfc;
+  background: var(--pm-sunken);
+}
+
+/* 地區色塊：圓角 2px + 墨邊，像貼紙 */
+.row-thumb {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--pm-edge);
+  border-radius: var(--pm-radius);
+  color: var(--pm-ink);
+}
+
+.row-thumb ion-icon {
+  font-size: 20px;
 }
 
 .row-main {
@@ -78,14 +124,15 @@
 .row-title {
   margin: 0 0 3px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--pm-ink);
   line-height: 1.3;
+  letter-spacing: -0.1px;
 }
 
 .row-sub {
   margin: 0;
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--pm-ink-2);
   line-height: 1.35;
   overflow: hidden;
@@ -95,59 +142,8 @@
 
 .row-arrow {
   flex: 0 0 auto;
-  font-size: 16px;
-  color: #c3c8ce;
-}
-
-.empty {
-  margin: 40px 24px;
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 15px;
   color: var(--pm-ink-3);
-  text-align: center;
-}
-
-/* 上次瀏覽 */
-.resume {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: calc(100% - 32px);
-  margin: 10px 16px 0;
-  padding: 10px 12px;
-  border: 1px solid var(--pm-line);
-  border-radius: var(--pm-radius-sm);
-  background: var(--pm-surface);
-  color: var(--pm-ink);
-  font-family: var(--pm-font);
-  text-align: left;
-  cursor: pointer;
-}
-
-.resume-label {
-  flex: 0 0 auto;
-  font-size: 12px;
-  color: var(--pm-ink-3);
-}
-
-.resume-place {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-size: 13.5px;
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.resume ion-icon {
-  flex: 0 0 auto;
-  font-size: 14px;
-  color: #c3c8ce;
-}
-
-.resume:active {
-  background: #fafbfc;
 }
 
 /* 每行的即時概況 */
@@ -156,13 +152,13 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  margin: 5px 0 0;
-  font-size: 11.5px;
+  margin: 6px 0 0;
+  font-size: 11px;
   line-height: 1.4;
   color: var(--pm-ink-2);
 }
 
-/* 綠點 = 有人在線 */
+/* 綠點 = 有人在線（橙色留給報料） */
 .live-people {
   display: inline-flex;
   align-items: center;
@@ -173,14 +169,14 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #2ecc71;
+  background: #2f9e5f;
 }
 
 /* 報料用主色 */
 .live-report {
   max-width: 160px;
-  font-weight: 500;
-  color: var(--ion-color-primary);
+  font-weight: 700;
+  color: var(--ion-color-primary-shade);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -193,35 +189,80 @@
   gap: 3px;
   color: var(--pm-ink-3);
   font-family: var(--pm-num-font);
-  font-size: 11px;
+  font-size: 10.5px;
 }
 
 .live-photo ion-icon {
   font-size: 12px;
 }
 
-/* 未讀數 */
+/* 未讀數：方形橙章，貼紙感 */
 .badge-unread {
   flex: 0 0 auto;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  border-radius: 9px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0 4px;
+  border: 2px solid var(--pm-edge);
+  border-radius: var(--pm-radius);
   background: var(--ion-color-primary);
-  color: #ffffff;
+  color: #14161a;
   font-family: var(--pm-num-font);
-  font-size: 10.5px;
-  line-height: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 17px;
   text-align: center;
+}
+
+/* 上次瀏覽 */
+.resume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: calc(100% - 32px);
+  margin: 12px 16px 0;
+  padding: 10px 12px;
+  border: 2px solid var(--pm-edge);
+  border-radius: var(--pm-radius);
+  background: var(--pm-surface);
+  box-shadow: var(--pm-shadow-sm);
+  color: var(--pm-ink);
+  font-family: var(--pm-font);
+  text-align: left;
+  cursor: pointer;
+}
+
+.resume-label {
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--pm-ink-3);
+}
+
+.resume-place {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resume ion-icon {
+  flex: 0 0 auto;
+  font-size: 14px;
+  color: var(--pm-ink);
+}
+
+.resume:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--pm-edge);
 }
 
 /* 我的報料 */
 .my-reports {
   padding: 0 16px 28px;
-}
-
-.my-reports .pm-group-title {
-  margin-top: 8px;
 }
 
 .report-row {
@@ -230,4 +271,12 @@
 
 .report-row:active {
   background: none;
+}
+
+.empty {
+  margin: 40px 24px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pm-ink-3);
+  text-align: center;
 }

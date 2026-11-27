@@ -73,11 +73,15 @@
 .save-btn {
   --background: var(--ion-color-primary);
   --background-activated: var(--ion-color-primary-shade);
-  --border-radius: var(--pm-radius-sm);
-  --box-shadow: none;
+  --border-radius: var(--pm-radius);
+  --border-width: 2px;
+  --border-style: solid;
+  --border-color: var(--pm-edge);
+  --color: #14161a;
+  --box-shadow: var(--pm-shadow-sm);
   height: 46px;
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.3px;
 }
