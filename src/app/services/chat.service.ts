@@ -96,7 +96,7 @@ export class ChatService {
   }
 
   /** 上傳一張相片。用 FormData，唔好自己設 Content-Type（要俾 browser 加 boundary）。 */
-  async uploadPhoto(place: string, name: string, blob: Blob): Promise<void> {
+  async uploadPhoto(place: string, name: string, blob: Blob | File): Promise<PlacePhoto> {
     const form = new FormData();
     form.append('place', place);
     form.append('name', name);
@@ -107,6 +107,23 @@ export class ChatService {
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body.error || '上傳失敗');
+    }
+
+    const body = await res.json();
+    return body.photo as PlacePhoto;
+  }
+
+  /** 刪除自己上傳的相片（server 會用暱稱核對）。 */
+  async deletePhoto(place: string, photoId: string, name: string): Promise<void> {
+    const res = await fetch(SERVER_URL + '/photos/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ place, photoId, name })
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || '刪除失敗');
     }
   }
 

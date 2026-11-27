@@ -243,8 +243,45 @@ app.post('/upload', (req, res, next) => {
   });
 });
 
-// ---------- 檢舉相片 ----------
+// ---------- 刪除自己的相片 ----------
 
+app.post('/photos/delete', (req, res) => {
+  const place = req.body.place;
+  const photoId = req.body.photoId;
+  // 用上傳時的暱稱核對（冇帳號系統，呢個係最小可行做法）
+  const who = (req.body.name || '匿名主人').slice(0, 20);
+
+  if (!place || !photoId) {
+    return res.status(400).json({ ok: false, error: '缺少地點或相片 id' });
+  }
+
+  const photo = (photos[place] || []).find((p) => p.id === photoId);
+
+  if (!photo) {
+    return res.status(404).json({ ok: false, error: '找不到這張相片' });
+  }
+
+  if (photo.name !== who) {
+    return res.status(403).json({ ok: false, error: '只可以刪除自己上傳的相片' });
+  }
+
+  photos[place] = photos[place].filter((p) => p.id !== photoId);
+
+  // 順手刪檔（Windows 上檔案被讀取中會 EBUSY，失敗都唔影響回應）
+  const filename = path.basename(photo.url);
+  try {
+    fs.unlinkSync(path.join(UPLOAD_DIR, filename));
+  } catch (e) {
+    console.warn('刪檔失敗（可忽略）：', filename, e.code);
+  }
+
+  pushToPlace(place, { type: 'photo-removed', photoId: photoId });
+  broadcastSummary();
+
+  res.json({ ok: true });
+});
+
+// ---------- 檢舉相片 ----------
 app.post('/photos/report', (req, res) => {
   const place = req.body.place;
   const photoId = req.body.photoId;
@@ -282,7 +319,13 @@ app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d' }));
 const WEB_DIR = path.join(__dirname, '..', 'www');
 if (fs.existsSync(WEB_DIR)) {
   app.use(express.static(WEB_DIR));
-  app.get('*', (req, res) => res.sendFile(path.join(WEB_DIR, 'index.html')));
+  app.get('*', (req, res) => {
+    // 相片路徑唔應該跌落 index.html（否則「刪除了」會回 200，好易誤判）
+    if (req.path.startsWith('/uploads/')) {
+      return res.status(404).send('not found');
+    }
+    res.sendFile(path.join(WEB_DIR, 'index.html'));
+  });
 }
 
 app.get('/', (req, res) => {

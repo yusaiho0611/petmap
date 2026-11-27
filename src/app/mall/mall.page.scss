@@ -226,6 +226,24 @@ ion-content::part(scroll) {
   font-size: 14px;
 }
 
+/* 刪除自己相片：右上角一個紅色 × */
+.photo-del {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #c0392b;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #c0392b;
+  font-family: var(--pm-font);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
 /* 放大預覽 */
 .photo-viewer {
   position: fixed;

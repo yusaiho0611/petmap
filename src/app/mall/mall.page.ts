@@ -251,13 +251,53 @@ export class MallPage implements OnInit {
     this.cdr.detectChanges();
 
     try {
-      await this.chat.uploadPhoto(this.pet_name, this.myName || '匿名主人', file);
+      const uploaded = await this.chat.uploadPhoto(this.pet_name, this.myName || '匿名主人', file);
+      // 記住是我上傳的，之後可以刪（連上傳時的暱稱一齊記）
+      this.storage.addMyPhoto(uploaded.id, uploaded.name);
     } catch (e) {
       alert('上傳失敗：' + e.message);
       console.error(e);
     } finally {
       this.uploading = false;
       this.cdr.detectChanges();
+    }
+  }
+
+  /** 這張相是不是我上傳的（決定顯示「刪除」定「檢舉」）。 */
+  isMine(photo: PlacePhoto): boolean {
+    return this.storage.isMyPhoto(photo.id);
+  }
+
+  async deletePhoto(photo: PlacePhoto): Promise<void> {
+    const alertEl = await this.alertCtrl.create({
+      header: '刪除相片',
+      message: '確定刪除這張相片？刪除後所有人都看不到。',
+      buttons: [
+        { text: '取消', role: 'cancel' },
+        {
+          text: '刪除',
+          role: 'destructive',
+          handler: () => {
+            this.doDeletePhoto(photo);
+          }
+        }
+      ]
+    });
+    await alertEl.present();
+  }
+
+  private async doDeletePhoto(photo: PlacePhoto): Promise<void> {
+    // 用上傳當時的暱稱，唔係現在輸入框的值
+    const uploaderName = this.storage.myPhotoName(photo.id) || this.myName || '匿名主人';
+
+    try {
+      await this.chat.deletePhoto(this.pet_name, photo.id, uploaderName);
+      this.storage.removeMyPhoto(photo.id);
+      this.photos = this.photos.filter((p) => p.id !== photo.id);
+      this.cdr.detectChanges();
+    } catch (e) {
+      alert('刪除失敗：' + e.message);
+      console.error(e);
     }
   }
 

@@ -61,7 +61,23 @@
       <div class="photo-strip" *ngIf="photos.length > 0">
         <figure class="photo" *ngFor="let p of photos">
           <img [src]="photoSrc(p)" [alt]="p.name + ' 上傳的相片'" (click)="openPhoto(p)" />
-          <button type="button" class="photo-report" (click)="reportPhoto(p)" aria-label="檢舉這張相">
+
+          <!-- 自己上傳的：可以刪除；別人的：可以檢舉 -->
+          <button
+            type="button"
+            class="photo-del"
+            *ngIf="isMine(p)"
+            (click)="deletePhoto(p)"
+            aria-label="刪除這張相">
+            &times;
+          </button>
+
+          <button
+            type="button"
+            class="photo-report"
+            *ngIf="!isMine(p)"
+            (click)="reportPhoto(p)"
+            aria-label="檢舉這張相">
             <ion-icon name="flag-outline" aria-hidden="true"></ion-icon>
           </button>
         </figure>

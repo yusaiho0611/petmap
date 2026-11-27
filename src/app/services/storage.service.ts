@@ -8,6 +8,12 @@ export interface MyReport {
   time: number;
 }
 
+/** 自己上傳過的相片。 */
+export interface MyPhoto {
+  id: string;
+  name: string;
+}
+
 /**
  * localStorage 全部集中喺呢個 service。
  * 頁面唔需要知道 key 叫咩，亦唔需要自己 JSON.parse。
@@ -21,6 +27,7 @@ export class StorageService {
   private readonly KEY_MY_REPORTS = 'pm_my_reports';
   private readonly KEY_CHAT_CACHE = 'pm_chat_cache_';
   private readonly KEY_REPORTED = 'pm_reported';
+  private readonly KEY_MY_PHOTOS = 'pm_my_photos';
 
   // ---------- 地點 ----------
 
@@ -116,6 +123,33 @@ export class StorageService {
       list.push(id);
       this.write(this.KEY_REPORTED, list.slice(-50));
     }
+  }
+
+  // ---------- 自己上傳的相片 ----------
+
+  private getMyPhotos(): MyPhoto[] {
+    return this.readArray<MyPhoto>(this.KEY_MY_PHOTOS);
+  }
+
+  /** 記住這張相是我上傳的（連上傳時的暱稱，否則改咗名就刪唔到）。 */
+  addMyPhoto(id: string, name: string): void {
+    const list = this.getMyPhotos();
+    list.push({ id, name });
+    this.write(this.KEY_MY_PHOTOS, list.slice(-50));
+  }
+
+  isMyPhoto(id: string): boolean {
+    return this.getMyPhotos().some((p) => p.id === id);
+  }
+
+  /** 刪除時要用上傳當時的暱稱，唔係現在輸入框的值。 */
+  myPhotoName(id: string): string {
+    const found = this.getMyPhotos().find((p) => p.id === id);
+    return found ? found.name : '';
+  }
+
+  removeMyPhoto(id: string): void {
+    this.write(this.KEY_MY_PHOTOS, this.getMyPhotos().filter((p) => p.id !== id));
   }
 
   // ---------- 內部工具 ----------
