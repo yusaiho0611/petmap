@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import * as L from 'leaflet';
 import { ChatService, ChatMessage, LiveEvent, PlacePhoto } from '../services/chat.service';
 import { StorageService } from '../services/storage.service';
@@ -225,31 +224,37 @@ export class MallPage implements OnInit {
 
   // ---------------- 現場相片 ----------------
 
-  /** 影相或由相簿揀一張，然後上傳。 */
-  async takePhoto(): Promise<void> {
+  /**
+   * 用戶揀完相（或影完相）之後。
+   * 為什麼用 <input type="file"> 而唔用 Capacitor Camera？
+   * Capacitor 的 Camera 在網頁要額外裝 pwa-elements，未裝的話 Promise 會一直卡住、
+   * 按鈕看似「冇反應」。file input 在桌面／手機瀏覽器都一定 work，
+   * 手機上系統會問「相機」定「相簿」。
+   */
+  async onPhotoPicked(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files[0];
+
+    // 清空，否則再揀同一張相不會觸發 change
+    input.value = '';
+
+    if (!file) {
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('相片太大，最多 5 MB');
+      return;
+    }
+
+    this.uploading = true;
+    this.cdr.detectChanges();
+
     try {
-      const shot = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
-        source: CameraSource.Prompt,
-        quality: 70
-      });
-
-      if (!shot.webPath) {
-        return;
-      }
-
-      const blob = await (await fetch(shot.webPath)).blob();
-
-      this.uploading = true;
-      this.cdr.detectChanges();
-
-      await this.chat.uploadPhoto(this.pet_name, this.myName || '匿名主人', blob);
+      await this.chat.uploadPhoto(this.pet_name, this.myName || '匿名主人', file);
     } catch (e) {
-      // 用戶自己取消唔當出錯
-      const msg = String(e);
-      if (!msg.includes('cancel')) {
-        alert('上傳失敗：' + msg);
-      }
+      alert('上傳失敗：' + e.message);
+      console.error(e);
     } finally {
       this.uploading = false;
       this.cdr.detectChanges();

@@ -38,7 +38,7 @@ PetMap 的答案：**每個地點都有即時現場狀況 + 一個屬於該地�
 - **上次去過**：一按回到上次瀏覽的地點
 - **我的報料記錄**：主頁可看自己報過什麼、幾時報
 - **離線仍可讀**：訊息會快取在本機，server 關掉都看到之前的對話，並顯示「連線中…」
-- **現場相片**：影相或由相簿揀相，上傳後即時推送給同一個地點的所有人；點縮圖可放大
+- **現場相片**：按「影相／揀相」→ 桌面開檔案選擇器、手機問「相機／相簿」；上傳後即時推送給同一個地點的所有人，點縮圖可放大
 - **相片檢舉**：三個人檢舉就自動隱藏；同一個人對同一張相只可以檢舉一次
 
 ---
@@ -62,7 +62,7 @@ Ionic 9 / Angular 22（前端）
 | 定位 | Capacitor Geolocation | 原生定位能力，網頁／手機同一套 API |
 | 後端 | Node.js + Express | 最少程式碼開到 API，學生環境易部署 |
 | 即時通訊 | **SSE（Server-Sent Events）** | 單向廣播已足夠；瀏覽器內建 `EventSource`，不用額外套件；純 HTTP 易除錯 |
-| 相機／相簿 | Capacitor Camera | 一套 API 同時支援網頁（檔案選擇器）同手機（原生相機） |
+| 相片上傳 | 標準 `<input type="file" accept="image/*">` | 桌面開檔案選擇器、手機由系統問「相機／相簿」；Capacitor Camera 在網頁需要額外 pwa-elements，未裝會令 Promise 卡住 |
 | 檔案上傳 | multer（multipart） | Express 的標準做法，可設大小上限同只收圖片 |
 | 本機儲存 | localStorage | 課程要求；存暱稱、已讀、快取、報料記錄 |
 
@@ -98,6 +98,14 @@ npm start        # http://localhost:4200
 
 > 用手機測試：把 `src/app/services/chat.service.ts` 的 `SERVER_URL` 改成電腦的區網 IP
 > （例如 `http://192.168.1.10:3000`），手機與電腦需在同一個 Wi-Fi。
+
+### 線上版本
+
+```
+https://petmap-1.onrender.com
+```
+
+Render 免費層：15 分鐘無流量會休眠，第一次開約需 50 秒。
 
 ---
 
@@ -239,7 +247,7 @@ git push
 | Root Directory | `server` |
 | Build Command | `cd .. && npm install && npm run build && cd server && npm install` |
 | Start Command | `node server.js` |
-| Environment | `PORT` 由 Render 提供（`server.js` 已用 `process.env.PORT`） |
+| Environment | `PORT` 由 Render 提供（`server.js` 已用 `process.env.PORT`）；另需設 `NODE_VERSION=24.21.0`（Angular 22 要求 Node ≥ 22.22.3） |
 
 5. 部署後開 `https://<你的網址>` 就完成。
 

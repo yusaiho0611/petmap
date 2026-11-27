@@ -38,7 +38,7 @@ PetMap's answer: **every place carries a live status and its own discussion thre
 - **"Last visited"** — jump straight back to the place you opened last
 - **My reports** — a log of what you reported and when
 - **Readable offline** — messages are cached locally, so the history survives a server shutdown and the header shows "connecting…"
-- **On-site photos** — take a photo or pick one from the album; once uploaded it is pushed live to everyone viewing that place, and tapping a thumbnail opens it full size
+- **On-site photos** — tap "photo / pick", choose an image (desktop file picker, or Camera / Album on a phone); once uploaded it is pushed live to everyone viewing that place, and tapping a thumbnail opens it full size
 - **Photo reporting** — three reports hide a photo automatically, and one person can report the same photo only once
 
 ---
@@ -62,7 +62,7 @@ Ionic 9 / Angular 22 (client)
 | Geolocation | Capacitor Geolocation | Native positioning with one API across web and device |
 | Server | Node.js + Express | Smallest amount of code to expose an API |
 | Real-time | **SSE (Server-Sent Events)** | One-way broadcast is enough; `EventSource` is built into the browser, so no extra package; plain HTTP is easy to debug |
-| Camera / album | Capacitor Camera | One API covers both the web file picker and the native camera |
+| Photo upload | standard `<input type="file" accept="image/*">` | Opens a file picker on desktop; on a phone the OS offers Camera / Album. Capacitor Camera needs pwa-elements on the web and hangs without it |
 | File upload | multer (multipart) | The standard Express approach — size limit and image-only filter |
 | Local storage | localStorage | Course requirement; holds nickname, read state, cache, report log |
 
@@ -99,6 +99,14 @@ Uploaded photos are stored in `server/uploads/` (created on first start, already
 
 > On a phone: change `SERVER_URL` in `src/app/services/chat.service.ts` to your machine's LAN IP
 > (e.g. `http://192.168.1.10:3000`). Phone and computer must be on the same Wi-Fi.
+
+### Live deployment
+
+```
+https://petmap-1.onrender.com
+```
+
+Render free tier: the instance sleeps after 15 minutes idle, so the first load can take ~50 seconds.
 
 ---
 
@@ -239,7 +247,7 @@ git push
 | Root Directory | `server` |
 | Build Command | `cd .. && npm install && npm run build && cd server && npm install` |
 | Start Command | `node server.js` |
-| Environment | `PORT` is provided by Render (`server.js` already reads `process.env.PORT`) |
+| Environment | `PORT` is provided by Render (`server.js` already reads `process.env.PORT`); also set `NODE_VERSION=24.21.0` (Angular 22 needs Node ≥ 22.22.3) |
 
 5. Open `https://<your-app>` and it is live.
 

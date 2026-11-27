@@ -39,9 +39,18 @@
           現場相片
           <span class="photo-count" *ngIf="photos.length > 0">{{ photos.length }}</span>
         </h2>
-        <button type="button" class="photo-add" (click)="takePhoto()" [disabled]="uploading">
+
+        <!-- 真正的檔案輸入：桌面開檔案選擇器、手機會問「相機／相簿」 -->
+        <input
+          #photoInput
+          type="file"
+          accept="image/*"
+          hidden
+          (change)="onPhotoPicked($event)" />
+
+        <button type="button" class="photo-add" (click)="photoInput.click()" [disabled]="uploading">
           <ion-icon name="camera-outline" aria-hidden="true"></ion-icon>
-          {{ uploading ? '上傳中…' : '影相' }}
+          {{ uploading ? '上傳中…' : '影相／揀相' }}
         </button>
       </div>
 
